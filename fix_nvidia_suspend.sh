@@ -1,4 +1,18 @@
 #!/bin/bash
+
+# ==============================================================================
+# Script Name:    fix_nvidia_suspend.sh
+# Description:    Fixes suspend/resume black screen issues on systems with
+#                 proprietary NVIDIA drivers by enabling VRAM preservation.
+#
+# Affected GPUs:  Most NVIDIA GPUs (Pascal, Turing, Ampere) using nvidia module
+# Tested on:      Fedora 41, RHEL-based distros
+#
+# Maintainer:     L0udy
+# Last Updated:   2025-05-14
+# License:        Internal use only / Free to distribute with attribution
+# ==============================================================================
+
 set -e
 
 CONFIG_PATH="/etc/modprobe.d/nvidia-power-management.conf"
