@@ -65,6 +65,15 @@ sudo bash -c "cat > $INSTALL_PATH" << 'EOF'
 # apt-lp (Ubuntu patch summary)
 # ============================
 
+# Refresh package lists (quiet unless errors)
+echo "Updating package lists..."
+sudo apt update -qq
+UPDATE_STATUS=$?
+
+if [ $UPDATE_STATUS -ne 0 ]; then
+    echo "WARNING: apt update failed. Results may be outdated."
+fi
+
 # Collect list of all package upgrades
 UPGRADABLE=$(apt-get -s dist-upgrade | grep '^Inst ')
 TOTAL_UPDATES=$(echo "$UPGRADABLE" | wc -l)
@@ -87,7 +96,7 @@ echo
 
 echo "==================== SECURITY PATCHES ONLY ===================="
 if [ "$SECURITY_UPDATES_COUNT" -eq 0 ]; then
-    echo "(no security patches)"
+    echo "(no security patches available)"
 else
     echo "$SECURITY_UPDATES_LIST"
 fi
