@@ -75,12 +75,12 @@ if [ $UPDATE_STATUS -ne 0 ]; then
 fi
 
 # Collect list of all package upgrades
-UPGRADABLE=$(apt-get -s dist-upgrade | grep '^Inst ')
-TOTAL_UPDATES=$(echo "$UPGRADABLE" | wc -l)
+UPGRADABLE=$(apt-get -s dist-upgrade | grep '^Inst ' | sed '/^$/d')
+TOTAL_UPDATES=$(echo "$UPGRADABLE" | sed '/^$/d' | wc -l)
 
 # Security updates only
-SECURITY_UPDATES_LIST=$(echo "$UPGRADABLE" | grep -i security)
-SECURITY_UPDATES_COUNT=$(echo "$SECURITY_UPDATES_LIST" | wc -l)
+SECURITY_UPDATES_LIST=$(echo "$UPGRADABLE" | grep -i security | sed '/^$/d')
+SECURITY_UPDATES_COUNT=$(echo "$SECURITY_UPDATES_LIST" | sed '/^$/d' | wc -l)
 
 ########################################
 # DISPLAY OUTPUT
